@@ -79,6 +79,9 @@ class _HomeScreenStackState extends State<_HomeScreenStack>
   final ScrollController _scrollController = ScrollController();
   String _searchQuery = '';
   List<JournalEntry> _displayEntries = const [];
+  // Bottom bar compact state, driven by the list scroll (pattern: Anchor).
+  bool _isBottomBarCompact = false;
+  double _barScrollDistance = 0.0;
 
   void _rebuildDisplay() {
     final allEntries = [
@@ -796,6 +799,31 @@ class _HomeScreenStackState extends State<_HomeScreenStack>
                 _lastOffset = offset;
                 _onScroll(offset, _displayEntries.length, _displayEntries);
               }
+              // Compact bottom bar: at the top the pill is full-width; after
+              // a small downward scroll it collapses into a round button.
+              if (notification is ScrollUpdateNotification &&
+                  _searchQuery.isEmpty) {
+                final wasCompact = _isBottomBarCompact;
+                if (offset < 40) {
+                  _barScrollDistance = 0.0;
+                  _isBottomBarCompact = false;
+                } else {
+                  final delta = notification.scrollDelta ?? 0.0;
+                  if (delta != 0 && !notification.metrics.outOfRange) {
+                    _barScrollDistance = delta.sign == _barScrollDistance.sign
+                        ? _barScrollDistance + delta
+                        : delta;
+                    if (_barScrollDistance > 4) {
+                      _isBottomBarCompact = true;
+                    } else if (_barScrollDistance < -4) {
+                      _isBottomBarCompact = false;
+                    }
+                  }
+                }
+                if (mounted && _isBottomBarCompact != wasCompact) {
+                  setState(() {});
+                }
+              }
             }
             return false;
           },
@@ -1142,6 +1170,7 @@ class _HomeScreenStackState extends State<_HomeScreenStack>
           left: 0,
           right: 0,
           child: JournalBottomBar(
+            compact: _isBottomBarCompact,
             onQueryChanged: (query) {
               setState(() {
                 _searchQuery = query;
