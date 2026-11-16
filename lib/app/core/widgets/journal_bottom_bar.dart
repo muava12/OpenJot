@@ -1,3 +1,5 @@
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:open_jot/app/core/constants.dart';
@@ -84,14 +86,17 @@ class _JournalBottomBarState extends State<JournalBottomBar> {
 
     return SafeArea(
       top: false,
-      child: Container(
-        height: 72.h,
-        width: double.infinity,
-        padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 8.h),
-        decoration: BoxDecoration(
-          color: colors.grey7.withOpacity(0.95),
-        ),
-        child: Row(
+      child: RepaintBoundary(
+        child: Container(
+          height: 72.h,
+          width: double.infinity,
+          padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 8.h),
+          decoration: BoxDecoration(
+            color: colors.grey7.withOpacity(0.82),
+          ),
+          child: BackdropFilter(
+            filter: ui.ImageFilter.blur(sigmaX: 14, sigmaY: 14),
+            child: Row(
               children: [
                 // --- Search pill (tappable to open search) ---
                 Expanded(
@@ -236,6 +241,8 @@ class _JournalBottomBarState extends State<JournalBottomBar> {
               ],
             ),
           ),
-        );
+        ),
+      ),
+    );
   }
 }
