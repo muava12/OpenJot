@@ -1,0 +1,2 @@
+• Restored the frosted blur on the journal bottom bar so it looks like a glass panel again, without blurring the whole screen.
+• Kept the top of the screen sharp: only the area behind the bottom bar fades.
