@@ -1,0 +1,2 @@
+• Compact bottom bar: scrolling the journal list down collapses the search pill into a round button; scrolling back up restores it.
+• Frosted bottom bar blur restored without blurring the whole screen.
