@@ -1,0 +1,2 @@
+• Restored the original screen blur (the look from 1.3.0) — the previous "fix" had changed it by mistake.
+• Lighter frosted blur on the bottom bar, so the screen no longer looks fogged.

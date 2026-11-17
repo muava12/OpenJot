@@ -119,10 +119,10 @@ class _JournalBottomBarState extends State<JournalBottomBar> {
           width: double.infinity,
           padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 8.h),
           decoration: BoxDecoration(
-            color: colors.grey7.withOpacity(0.82),
+            color: colors.grey7.withOpacity(0.9),
           ),
           child: BackdropFilter(
-            filter: ui.ImageFilter.blur(sigmaX: 14, sigmaY: 14),
+            filter: ui.ImageFilter.blur(sigmaX: 6, sigmaY: 6),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
